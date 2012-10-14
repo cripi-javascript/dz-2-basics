@@ -19,23 +19,21 @@
  *
  */
 
-function Event(Call, DateStart, DateFinish, Description, Parent, Childs, Comments, Peoples, Location, Private, Rank, EvRS, Link)
-{
+function Event(Call, DateStart, DateFinish, Description, Parent, Childs, Comments, Peoples, Location, Private, Rank, EvRS, Link) {
+    'use strict';
 	return {
-		"start": DateStart || new Date ()
-		"end"  : DateFinish, // ,???Как увеличить значение "временного объекта" на час?
-		"name" : Call || "Новое событие",
+		"start": DateStart || new Date(),
+		"end": DateFinish,
+		"name": Call || "Новое событие",
 		"description": Description || "Описание события",
-		//
 		"parent": Parent || {},
 		"childs": Childs || [],
 		"comments": Comments || [],
-		//
 		"peoples": Peoples || [], 
 		"location": Location || {},
 		"private": Private || False, 
-		"rank"	 : Rank || 0,		
-		"EvRS"	 : EvRS || 18,		
-		"Link" 	 : Link || '' 		
+		"rank": Rank || 0,		
+		"EvRS": EvRS || 18,		
+		"Link": Link || '' 		
 	}
 }
