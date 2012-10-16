@@ -5,25 +5,55 @@
  * Time: 12:53 PM
  * To change this template use File | Settings | File Templates.
  */
-function Event(startEvent, endEvent, name, description, tegs, place, coordinates,color) {
-    var startEvent =  new Date(start);
-    var endEvent = new Date(end);
 
 
-    if ('Invalid Date' == startEvent||'Invalid Date' == endEvent) {
-        alert("не верный формат даты")
+/**
+ * Описания собития
+ * @param start {Date}
+ * @param end {string}
+ * @param name {string}
+ * @param description {string}
+ * @param tegs {string}
+ * @param place {string}
+ * @param coordinates {string}
+ * @param colorFon {string}
+ * @param reminders {boolean}
+ * @param reminderTimeBeforeEvent {string}
+ * @param friends {string}
+ */
+function Event(start, end, name, description, tegs, place, coordinates, colorFon, reminders, reminderTimeBeforeEvent, friends) {
+    'use strict';
+    var startEvent =  new Date(start),
+        endEvent = new Date(end),
+        color = colorFon;
+
+
+    if ('Invalid Date' === startEvent || 'Invalid Date' === endEvent) {
+        alert ("не верный формат даты");
     }
     if (startEvent > endEvent) {
-        endEvent = startEvent;
+        var t = startEvent;
+        startEvent = endEvent;
+        endEvent = t;
     }
-
-    function findCoordinates(place){
+    /**
+     * преоброзумем адрес в точные кардинаты
+     * @param place {string}
+     * @return {*}
+     */
+    function findCoordinates(place) {
         //...
         return coordinates;
     }
-    if (coordinates=="" && place){
+    if (coordinates === "" && place) {
         var coordinates = findCoordinates(place);
     }
+
+    var regColorcode = /^(#)?([0-9a-fA-F]{3})([0-9a-fA-F]{3})?$/;
+    if (regColorcode.test(color) !== false) {
+        alert ("все плохо это не цвет");
+    }
+
     return {
         "startEvent": startEvent,
         "endEvent": endEvent,
@@ -32,8 +62,9 @@ function Event(startEvent, endEvent, name, description, tegs, place, coordinates
         "tegs": tegs.split(","),
         "place": +place,
         "coordinates": +coordinates,
-        "color": color || "fff"
+        "color": color || "#fff",
+        "reminders": reminders || false,
+        "reminderTimeBeforeEvent": new Date(reminderTimeBeforeEvent) || startEvent
+        "friends": friends.split(",")
     };
-}
-
-var TegList = []
+};
