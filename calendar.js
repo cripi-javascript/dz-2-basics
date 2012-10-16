@@ -9,17 +9,19 @@
 
 /**
  * Описания собития
- * @param start {Date}
- * @param end {string}
- * @param name {string}
- * @param description {string}
- * @param tegs {string}
- * @param place {string}
- * @param coordinates {string}
- * @param colorFon {string}
- * @param reminders {boolean}
- * @param reminderTimeBeforeEvent {string}
- * @param friends {string}
+ * @param start {Date}                  Начало собития
+ * @param end {string}                  Конец события
+ * @param name {string}                 Заголовок
+ * @param description {string}          Описание
+ * @param tegs {string}                 Теги
+ * @param place {string}                Адрес собития
+ * @param coordinates {string}          Кардинаты собития
+ * @param colorFon {string}             Цвети стикира
+ * @param reminders {boolean}           Индекатор уведомлений
+ * @param reminderTimeBeforeEvent {string}  Время уведомления
+ * @param friends {string}              Ссылки на друзей из соц сетей
+ *
+ * @return {Object}
  */
 function Event(start, end, name, description, tegs, place, coordinates, colorFon, reminders, reminderTimeBeforeEvent, friends) {
     'use strict';
@@ -38,8 +40,8 @@ function Event(start, end, name, description, tegs, place, coordinates, colorFon
     }
     /**
      * преоброзумем адрес в точные кардинаты
-     * @param place {string}
-     * @return {*}
+     * @param place {string}    Адрес собыитя
+     * @return {*}              Кардинаты провдения собития
      */
     function findCoordinates(place) {
         //...
