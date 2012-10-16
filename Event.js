@@ -1,17 +1,17 @@
-/*
- * Возвращает объект Event
+п»ї/*
+ * Р’РѕР·РІСЂР°С‰Р°РµС‚ РѕР±СЉРµРєС‚ Event
  *
- * @param {Number|Date} start             Начало события
- * @param {Number|Date} end               Конец события
- * @param {String}      [name="Событие"]  Имя события
- * @param {String}      [place="Место"]      Место события
- * @param {Number} GPS                    Координаты события
+ * @param {Number|Date} start             РќР°С‡Р°Р»Рѕ СЃРѕР±С‹С‚РёСЏ
+ * @param {Number|Date} end               РљРѕРЅРµС† СЃРѕР±С‹С‚РёСЏ
+ * @param {String}      [name="РРјСЏ"]      РќР°Р·РІР°РЅРёРµ СЃРѕР±С‹С‚РёСЏ
+ * @param {String}      [place="РњРµСЃС‚Рѕ"]   РњРµСЃС‚Рѕ СЃРѕР±С‹С‚РёСЏ
+ * @param {Number} GPS                    РљРѕРѕСЂРґРёРЅР°С‚С‹ СЃРѕР±С‹С‚РёСЏ
  *
  * @example
  *    Event(new Date('2011-10-10T14:48:00'),
  *          new Date('2011-10-10T15:48:00'),
- *          "Совещание",
- *          "Хаят",
+ *          "РЎРѕРІРµС‰Р°РЅРёРµ",
+ *          "РҐР°СЏС‚",
  *          "624:342" )
  *
  * @return {Object}
@@ -21,8 +21,8 @@ function Event(start, end, name, place, GPS) {
     return {
         "start": +start,
         "end": +end,
-        "name": name || "Событие",
-        "place": place ||  "Место",
+        "name": name || "РРјСЏ",
+        "place": place ||  "РњРµСЃС‚Рѕ",
         "GPS": GPS || "624:342
     };
 }
