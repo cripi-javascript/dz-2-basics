@@ -42,7 +42,7 @@ function Event(eventOptions) {
         } else{
             return time
         }
-    }
+}
     eventOptions.startEvent = isData(eventOptions.startEvent);
     eventOptions.endEvent = isData(eventOptions.endEvent);
     if (eventOptions.startEvent > eventOptions.endEvent) {
