@@ -9,35 +9,54 @@
 
 /**
  * Описания собития
- * @param start {Date}                  Начало собития
- * @param end {string}                  Конец события
- * @param name {string}                 Заголовок
- * @param description {string}          Описание
- * @param tegs {string}                 Теги
- * @param place {string}                Адрес собития
- * @param coordinates {string}          Кардинаты собития
- * @param colorFon {string}             Цвети стикира
- * @param reminders {boolean}           Индекатор уведомлений
- * @param reminderTimeBeforeEvent {string}  Время уведомления
- * @param friends {string}              Ссылки на друзей из соц сетей
+ * @param eventOptions {Object}                            Обекс с параметарми
+ * @param eventOptions.startEvent {Number | Date}          Начало собития
+ * @param eventOptions.endEvent {Number | Date}            Конец события
+ * @param eventOptions.name {string}                       Заголовок
+ * @param eventOptions.description {string}                Описание
+ * @param eventOptions.tegs {string}                       Теги
+ * @param eventOptions.place {string}                      Адрес собития
+ * @param eventOptions.coordinates {string}                Кардинаты собития
+ * @param eventOptions.colorFon {string}                   Цвети стикира
+ * @param eventOptions.reminders {boolean}                 Индекатор уведомлений
+ * @param eventOptions.reminderTimeBefore {Number | Date}  Время уведомления
+ * @param eventOptions.friends {string}                    Ссылки на друзей из соц сетей
  *
  * @return {Object}
  */
-function Event(start, end, name, description, tegs, place, coordinates, colorFon, reminders, reminderTimeBeforeEvent, friends) {
+function Event(eventOptions) {
     'use strict';
-    var startEvent =  new Date(start),
-        endEvent = new Date(end),
-        color = colorFon;
-
-
-    if ('Invalid Date' === startEvent || 'Invalid Date' === endEvent) {
-        alert ("не верный формат даты");
+    /**
+     * проверка и приведения к дате
+     * @param time {Number | Date} Дата или стока
+     * @return {Date}              Вернет в формате даты
+     */
+    function isData(time){
+        if ('string' === typeof(time)){
+            var start = new Date(time)
+            if ('Invalid Date' === start){
+                alert ("не верный формат даты");
+            } else{
+                return start
+            }
+        } else{
+            return time
+        }
     }
-    if (startEvent > endEvent) {
-        var t = startEvent;
-        startEvent = endEvent;
-        endEvent = t;
+    eventOptions.startEvent = isData(eventOptions.startEvent);
+    eventOptions.endEvent = isData(eventOptions.endEvent);
+    if (eventOptions.startEvent > eventOptions.endEvent) {
+        var t = eventOptions.startEvent;
+        eventOptions.startEvent = eventOptions.endEvent;
+        eventOptions.endEvent = t;
     }
+
+    eventOptions.startEvent = eventOptions.startEvent || new Date;
+    eventOptions.endEvent = eventOptions.endEvent || new Date;
+    eventOptions.name = eventOptions.name || "Событие";
+    eventOptions.description = eventOptions.description || "";
+    eventOptions.tegs = tegs.split(",") || [];
+
     /**
      * преоброзумем адрес в точные кардинаты
      * @param place {string}    Адрес собыитя
@@ -47,26 +66,21 @@ function Event(start, end, name, description, tegs, place, coordinates, colorFon
         //...
         return coordinates;
     }
-    if (coordinates === "" && place) {
-        var coordinates = findCoordinates(place);
+    if (eventOptions.coordinates === "" && eventOptions.place) {
+        eventOptions.coordinates = findCoordinates(eventOptions.place);
     }
+    eventOptions.place = +place || "";
+    eventOptions.coordinates = +coordinates || "";
+
 
     var regColorcode = /^(#)?([0-9a-fA-F]{3})([0-9a-fA-F]{3})?$/;
-    if (regColorcode.test(color) !== false) {
+    if (regColorcode.test(eventOptions.color) !== false) {
+        eventOptions.color = "";
         alert ("все плохо это не цвет");
     }
-
-    return {
-        "startEvent": startEvent,
-        "endEvent": endEvent,
-        "name": +name || "Событие",
-        "description": +description,
-        "tegs": tegs.split(","),
-        "place": +place,
-        "coordinates": +coordinates,
-        "color": color || "#fff",
-        "reminders": reminders || false,
-        "reminderTimeBeforeEvent": new Date(reminderTimeBeforeEvent) || startEvent
-        "friends": friends.split(",")
-    };
+    eventOptions.color = color || "#fff";
+    eventOptions.reminders = reminders || false;
+    eventOptions.reminderTimeBeforeEvent = isData(eventOptions.reminderTimeBeforeEvent) || eventOptions.startEvent;
+    eventOptions.friends = friends.split(",") || [];
+    return eventOptions;
 };
