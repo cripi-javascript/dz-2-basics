@@ -1,8 +1,6 @@
 ﻿/*jslint nomen: true*/
 /*global runTests: true*/
 /*global Event: true*/
-/*global _defaultFriendList: true*/
-/*global _defaultLocation: true*/
 /*global _isDateTime: true*/
 /*global _isDateTimeTestCorrect: true*/
 /*global _correctionStarts: true*/
@@ -14,7 +12,8 @@ function runTests() {
     __correctionStartsTest();
     var myevent = new Event(new Date(10), new Date(1), "Happy Birthday)", "Home");
 }
-function Event(start, end, name, location, friends, stars) {
+// передавать в функцию объект - задача функции просто провалидировать поля
+function Event(start, end, name, location) {
     "use strict";
     if (!_isDateTime(start)) {
         throw new Error("Start Event dont exists!");
@@ -28,33 +27,43 @@ function Event(start, end, name, location, friends, stars) {
         start = tempDate;
     }
     name = name || "New Event";
-    location = location || _defaultLocation();
-    friends = friends || _defaultFriendList();
-    stars = _correctionStarts(stars);
+    location = location || {
+        "gps": {x: 0, y: 0},
+        "nameLocation": "Earth"
+    };
     return {
         "start": start,
         "end": end,
         "name": name,
         "location": location,
-        "friends": friends,
-        "stars": stars
+        "friends": [],
+        "stars": 0,
+        "setLocation": function (gps , name) {
+            if (typeof gps !== "undefined"  && typeof gps.x !== "undefined" && typeof gps.y !== "undefined" && typeof name === "string" ) {
+                this.location.gps=gps;
+                this.location.nameLocation=name;
+            }
+        },
+        "addFriend": function (friend) {
+            this.friends.push(friend);
+        },
+        "leaveMark": function(stars) {
+            "use strict";
+            if (typeof stars !== "number" || stars < 0) {
+                stars = 0;
+            }
+            if (stars > 5) {
+                stars = 5;
+            }
+            stars = (stars - (stars % 1)); //обрезаем дробную часть
+            this.stars = stars;
+        }
     };
 }
-function _defaultFriendList() {
-    "use strict";
-    return [];
-}
-function _defaultLocation() {
-    "use strict";
-    return {
-        "GPS": {x: 0, y: 0},
-        "NameLocation": "Earth"
-    };
-}
-
+// проверка date === undefined не работает  -  нужно писать typeof date === undefined, нулл не знаю. странно както выглядит
 function _isDateTime(date) {
     "use strict";
-    if (date === undefined || date === null) {
+    if (typeof date === "undefined" || date === null) {
         return false;
     }
     return (date.getTime || false);
@@ -71,35 +80,28 @@ function _isDateTimeTestCorrect() {
     }
 }
 
-function _correctionStarts(stars) {
-    "use strict";
-    if (typeof stars !== "number") {
-        return 0;
-    }
-    if (stars < 0) {
-        return 0;
-    }
-    if (stars > 5) {
-        return 5;
-    }
-    return (stars - (stars % 1)); //обрезаем дробную часть
-}
+// мне кажется или это лишнее ? звездочка вроде как не обьязательный параметр
 function __correctionStartsTest() {
     "use strict";
-    var dontStarts = "dont start", bigStart = 10, smallStart = -1, doubleStart = 1.234, correctStart = 2;
-    if (_correctionStarts(dontStarts) !== 0) {
+    var dontStarts = "dont start", bigStart = 10, smallStart = -1, doubleStart = 1.234, correctStart = 2, testEvent=new Event(new Date(1));
+    testEvent.leaveMark(dontStarts);
+    if (testEvent.stars !== 0) {
         throw new Error("Ошибка: Звездочка не число Оо");
     }
-    if (_correctionStarts(bigStart) !== 5) {
+    testEvent.leaveMark(bigStart);
+    if (testEvent.stars !== 5) {
         throw new Error("Ошибка: Функция пропустила слишком большую звездочку");
     }
-    if (_correctionStarts(smallStart) !== 0) {
+    testEvent.leaveMark(smallStart);
+    if (testEvent.stars !== 0) {
         throw new Error("Ошибка: Функция пропустила слишком маленькую звездочку");
     }
-    if (_correctionStarts(doubleStart) !== 1) {
+    testEvent.leaveMark(doubleStart);
+    if (testEvent.stars !== 1) {
         throw new Error("Ошибка: Функция не отрезала дробное окончание");
     }
-    if (_correctionStarts(correctStart) !== 2) {
+    testEvent.leaveMark(correctStart);
+    if (testEvent.stars !== 2) {
         throw new Error("Ошибка: Функция изменила хорошую звездочку");
     }
 }
