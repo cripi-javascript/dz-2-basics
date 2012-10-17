@@ -46,9 +46,9 @@ function Event(eventOptions) {
     eventOptions.startEvent = isData(eventOptions.startEvent);
     eventOptions.endEvent = isData(eventOptions.endEvent);
     if (eventOptions.startEvent > eventOptions.endEvent) {
-        var VAR1 = eventOptions.startEvent;
+        var startEvent = eventOptions.startEvent;
         eventOptions.startEvent = eventOptions.endEvent;
-        eventOptions.endEvent = VAR1;
+        eventOptions.endEvent = startEvent;
     }
 
     eventOptions.startEvent = eventOptions.startEvent || new Date;
