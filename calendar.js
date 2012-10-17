@@ -9,18 +9,18 @@
 
 /**
  * Описания собития
- * @param eventOptions {Object}                            Обекс с параметарми
- * @param eventOptions.startEvent {Number | Date}          Начало собития
- * @param eventOptions.endEvent {Number | Date}            Конец события
- * @param eventOptions.name {string}                       Заголовок
- * @param eventOptions.description {string}                Описание
- * @param eventOptions.tegs {string}                       Теги
- * @param eventOptions.place {string}                      Адрес собития
- * @param eventOptions.coordinates {string}                Кардинаты собития
- * @param eventOptions.colorFon {string}                   Цвети стикира
- * @param eventOptions.reminders {boolean}                 Индекатор уведомлений
- * @param eventOptions.reminderTimeBefore {Number | Date}  Время уведомления
- * @param eventOptions.friends {string}                    Ссылки на друзей из соц сетей
+ * @param {Object}          eventOptions                      Обекс с параметарми
+ * @param {Number | Date}   eventOptions.startEvent           Начало собития
+ * @param {Number | Date}   eventOptions.endEvent             Конец события
+ * @param {string}          eventOptions.name                 Заголовок
+ * @param {string}          eventOptions.description          Описание
+ * @param {string}          eventOptions.tegs                 Теги
+ * @param {string}          eventOptions.place                Адрес собития
+ * @param {string}          eventOptions.coordinates          Кардинаты собития
+ * @param {string}          eventOptions.colorFon             Цвети стикира
+ * @param {boolean}         eventOptions.reminders            Индекатор уведомлений
+ * @param {Number | Date}   eventOptions.reminderTimeBefore   Время уведомления
+ * @param {string}          eventOptions.friends              сылки на друзей из соц сетей
  *
  * @return {Object}
  */
@@ -33,11 +33,11 @@ function Event(eventOptions) {
      */
     function isData(time){
         if ('string' === typeof(time)){
-            var start = new Date(time)
-            if ('Invalid Date' === start){
-                alert ("не верный формат даты");
+            var timeToData = new Date(time)
+            if ('Invalid Date' === timeToData){
+                new TypeError("не верный формат даты");
             } else{
-                return start
+                return timeToData
             }
         } else{
             return time
@@ -46,9 +46,9 @@ function Event(eventOptions) {
     eventOptions.startEvent = isData(eventOptions.startEvent);
     eventOptions.endEvent = isData(eventOptions.endEvent);
     if (eventOptions.startEvent > eventOptions.endEvent) {
-        var t = eventOptions.startEvent;
+        var VAR1 = eventOptions.startEvent;
         eventOptions.startEvent = eventOptions.endEvent;
-        eventOptions.endEvent = t;
+        eventOptions.endEvent = VAR1;
     }
 
     eventOptions.startEvent = eventOptions.startEvent || new Date;
@@ -76,11 +76,12 @@ function Event(eventOptions) {
     var regColorcode = /^(#)?([0-9a-fA-F]{3})([0-9a-fA-F]{3})?$/;
     if (regColorcode.test(eventOptions.color) !== false) {
         eventOptions.color = "";
-        alert ("все плохо это не цвет");
+        new TypeError("все плохо это не цвет");
     }
     eventOptions.color = color || "#fff";
     eventOptions.reminders = reminders || false;
     eventOptions.reminderTimeBeforeEvent = isData(eventOptions.reminderTimeBeforeEvent) || eventOptions.startEvent;
-    eventOptions.friends = friends.split(",") || [];
+    eventOptions.friends = friends.split(",") || undefined;
     return eventOptions;
 };
+
