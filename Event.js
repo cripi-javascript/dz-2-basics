@@ -23,6 +23,6 @@ function Event(start, end, name, place, GPS) {
         "end": +end,
         "name": name || "Имя",
         "place": place ||  "Место",
-        "GPS": GPS || "624:342
+        "GPS": GPS || "624:342"
     };
 }
