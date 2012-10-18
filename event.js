@@ -21,7 +21,7 @@ function Event(start, end, name, description, rating, alarm) {
     } else {
         var new_alarm = false;
     }
-    if ((typeof(rating) === "number")) {
+    if (typeof(rating) === "number") {
         if (rating > 5 || rating < 1) {
             var new_rating = 1;
         } else {
