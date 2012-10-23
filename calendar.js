@@ -48,8 +48,11 @@ function event(obj) {
     }
 
     if (!isDate(obj.end)) {
-        alert("Error! Not event object!");
-        return;
+        obj.end = obj.start;
+    }
+
+    if (obj.end < obj.start) {
+        obj.end = obj.start;
     }
 
     return {
@@ -62,13 +65,20 @@ function event(obj) {
     };
 }
 
-function show(events) {
+/**
+ * Возвращает строковое представление объекта типа event
+ * @param {events} - объект типа event
+ * @return строковое представление event
+*/
+event.show = function (events) {
     "use strict";
 
-    return events.name + " начало: " + events.start
-        + " конец: " + events.end
-        + " место события: "  + events.location + " напомнить за " + events.remindTime + " минут"
-        + " описание: " + events.description;
+    if (typeof events === "undefined") return;
+
+    return events.name + "\n" +" начало: " + events.start + "\n" 
+        + " конец: " + events.end + "\n" 
+        + " место события: "  + events.location + " напомнить за " + events.remindTime + " минут" + "\n"
+        + " описание: " + events.description + "\n";
 }
 
 function test(obj) {
@@ -76,7 +86,7 @@ function test(obj) {
 
     var result = event(obj);
     if (typeof result !== 'undefined') {
-        alert(show(result));
+        alert(event.show(result));
     }
 }
 
