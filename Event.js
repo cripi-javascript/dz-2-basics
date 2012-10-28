@@ -24,7 +24,7 @@
  *
  * @return {Object} 
  */
-function Datatype(data) {
+function datatype(data) {
     "use strict";
     if (typeof data === 'undefined') {
         return false;
@@ -55,11 +55,11 @@ function ratingtype(rating) {
 */
 function Event(NewEvent) {
     "use strict";
-    if (!Datatype(NewEvent.start)) {
+    if (!datatype(NewEvent.start)) {
         alert(NewEvent.start + " не является датой!");
         return;
     }
-    if (!Datatype(NewEvent.end)) {
+    if (!datatype(NewEvent.end)) {
         alert(NewEvent.end + " не является датой!");
         return;
     }
