@@ -39,6 +39,7 @@ function init() {
             jstime = document.getElementById('htmltime').value,
             jswhere = document.getElementById('htmlwhere').value;
         var obj = event(jsname, jsdescription, jsdate, jstime, jswhere);
+        delete obj.name;
         var temp = '<table class="table table-striped"><p></p><p style = "font-size: 16px; font-weight: bold;  text-align: center;">' + jsname + '</p>';
         for (var objname in obj) {
             //noinspection JSUnfilteredForInLoop
