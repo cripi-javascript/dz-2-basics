@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Возвращает объект Event
  *
  * @param {String}       name             Название события
@@ -27,9 +27,9 @@ function event(name, description, date, time, where) {
     };
 }
 function toTitleCase(string) {
+    "use strict";
     return string.charAt(0).toUpperCase() + string.slice(1);
 }
-console.log(event('BalalaikaFest', 'Awesome musical performance', '2012-10-30T19:30:00-05:00', '2 hours', 'Yekaterinburg'));
 function init() {
     "use strict";
     document.getElementById('htmlbutton').onclick = function () {
@@ -37,10 +37,10 @@ function init() {
             jsdescription = document.getElementById('htmldescription').value,
             jsdate = document.getElementById('htmldate').value,
             jstime = document.getElementById('htmltime').value,
-            jswhere = document.getElementById('htmlwhere').value;
-        var obj = event(jsname, jsdescription, jsdate, jstime, jswhere);
-        delete obj.name;
-        var temp = '<table class="table table-striped"><p></p><p style = "font-size: 16px; font-weight: bold;  text-align: center;">' + jsname + '</p>';
+            jswhere = document.getElementById('htmlwhere').value,
+			obj = event(jsname, jsdescription, jsdate, jstime, jswhere),
+			temp = '<table class="table table-striped"><p></p><p style = "font-size: 16px; font-weight: bold;  text-align: center;">' + jsname + '</p>';
+		delete obj.name;
         for (var objname in obj) {
             //noinspection JSUnfilteredForInLoop
             temp += '<tr><th>' + toTitleCase(objname) + '</th><td>' + obj[objname] + '</td></tr>';
