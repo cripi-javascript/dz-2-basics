@@ -2,14 +2,16 @@
 /**
  * Возвращает объект Event
  *
- * @param {Number|Date} start             Начало события
- * @param {Number|Date} end               Конец события
- * @param {Number} rating                 Рейтинг события от 1 до 5(по умолчанию 1)
- * @param {String}      [place="Земля"]   Место проведения
- * @param {Number} numbParticipants       Количество участников
- * @param {String} participants           Имена участников через запятую
- * @param {String} regularity             Регулярность(ежедневно, еженедельно, ежемесячно(по умолчанию), ежегодно)
- * @param {String}      [name="Событие"]  Имя события
+ * @param {Object} EventData                             Объект - событие
+ * @param {Number|Date} EventData.start                  Начало события
+ * @param {Number|Date} EventData.end                    Конец события
+ * @param {Number} EventData.rate                        Рейтинг события от 1 до 5(по умолчанию 1)
+ * @param {String} EventData.place    [place="Земля"]    Место проведения
+ * @param {Number} EventData.numbParticipants            Количество участников
+ * @param {String} EventData.participants                Имена участников через запятую
+ * @param {String} EventData.regularity                  Регулярность(ежедневно, еженедельно, ежемесячно(по умолчанию), ежегодно)
+ * @param {String} EventData.comment                     Комментарий
+ * @param {String} EventData.name     [name="Событие"]   Имя события
  *
  * @example
  *    Event(new Date('2011-10-10T14:48:00'),
@@ -52,9 +54,18 @@ function isTime(input) {
     return time;
 }
 
-function Event(start, end, rate, place, numbParticipants, participants, regularity, comment, name) {
+function Event(EventData) {
     'use strict';
-    var startDate, endDate, startTime, endTime, participantsNames = [];
+    var startDate, endDate, startTime, endTime, participantsNames = [], start, end, rate, place, numbParticipants, participants, regularity, comment, name;
+    start = EventData.start;
+    end = EventData.end;
+    rate = EventData.rate;
+    place = EventData.place;
+    numbParticipants = EventData.numbParticipants;
+    participants = EventData.participants;
+    regularity = EventData.regularity;
+    comment = EventData.comment;
+    name = EventData.name;
     startDate = start.getDate() + '/' + (start.getMonth() + 1) + '/' + start.getFullYear();
     endDate = end.getDate() + '/' + (end.getMonth() + 1) + '/' + end.getFullYear();
     startTime = start.getUTCHours() + ':' + start.getUTCMinutes();
@@ -89,14 +100,14 @@ function Event(start, end, rate, place, numbParticipants, participants, regulari
         return;
     }
     return {
-        "start": start,
-        "end": end,
-		"rating": rate || 1,
-		"place": place || "Земля",
-		"numbParticipants": numbParticipants,
-		"participants": participantsNames.toString(),
-		"regularity": regularity || "Ежемесячно",
-		"commentary": comment,
-        "name": name || "Событие"
+        "start": EventData.start,
+        "end": EventData.end,
+        "rating": EventData.rate || 1,
+        "place": EventData.place || "Земля",
+        "numbParticipants": EventData.numbParticipants,
+        "participants": EventData.participants,
+        "regularity": EventData.regularity || "Ежемесячно",
+        "commentary": EventData.comment,
+        "name": EventData.name || "Событие"
     };
 }
