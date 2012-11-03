@@ -4,7 +4,8 @@ function checkStartDate(date) {
 	if (date === null) {
 		date = new Date();
 	} else if (!(date instanceof Date && isFinite(date))) {
-		throw new Error("Start date is invalid, check syntax");
+		console.log("Start date is invalid, check syntax");
+		date = null;
 	}
 	return date;
 }
@@ -18,7 +19,8 @@ function checkEndDate(endDate, startDate) {
 	} else if (endDate instanceof Date && isFinite(endDate)) {
 		date = endDate;
 	} else {
-		throw new Error("End date is invalid, check syntax");
+		console.log("End date is invalid, check syntax");
+		date = null;
 	}
 	return date;
 }
@@ -54,9 +56,11 @@ function checkRepeat(repeat) {
 	if (repeat === null) {
 		repeat = REPEAT.NEVER;
 	} else if (!(repeat.title && repeat.value)) {
-		throw new Error("Unknown type of 'repeat' variable");
+		console.log("Unknown type of 'repeat' variable");
+		repeat = null;
 	} else if (!checkAddTime(repeat.value)) {
-		throw new Error("Add time in 'repeat' variable must have format '+ dd.MM.YY hh:mm'");
+		console.log("Add time in 'repeat' variable must have format '+ dd.MM.YY hh:mm'");
+		repeat = null;
 	}
 	return repeat;
 }
@@ -66,9 +70,11 @@ function checkAlert(alert) {
 	if (alert === null) {
 		alert = ALERT.NONE;
 	} else if (!(alert.title && alert.value)) {
-		throw new Error("Unknown type of 'alert' variable");
+		console.log("Unknown type of 'alert' variable");
+		alert = null;
 	} else if (!checkAddTime(alert.value)) {
-		throw new Error("Add time in 'alert' variable must have format '+ dd.MM.YY hh:mm'");
+		console.log("Add time in 'alert' variable must have format '+ dd.MM.YY hh:mm'");
+		alert = null;
 	}
 	return alert;
 }
@@ -98,13 +104,20 @@ function checkAlert(alert) {
 function Event(title, location, starts, ends, repeat, alert, notes) {
 	'use strict';
 	var startDate, endDate;
-	try {
-		startDate = checkStartDate(starts);
-		endDate = checkEndDate(ends, starts);
-		repeat = checkRepeat(repeat);
-		alert = checkAlert(alert);
-	} catch (e) {
-		console.log(e.message);
+	startDate = checkStartDate(starts);
+	if (startDate === null) {
+		return;
+	}
+	endDate = checkEndDate(ends, starts);
+	if (endDate === null) {
+		return;
+	}
+	repeat = checkRepeat(repeat);
+	if (repeat === null) {
+		return;
+	}
+	alert = checkAlert(alert);
+	if (alert === null) {
 		return;
 	}
 	return {
