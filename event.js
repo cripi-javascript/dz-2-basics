@@ -48,7 +48,7 @@ function checkAddTime(addTime) {
 	var re, splitted;
 	re = "([+-]) (\\d?\\d.\\d?\\d.\\d?\\d) (\\d?\\d:\\d?\\d)";
 	splitted = addTime.match(re);
-	if (splitted !== null || splitted.length !== 4) {
+	if (splitted === null || splitted.length !== 4) {
 		splitted = null;
 	}
 	return splitted;
