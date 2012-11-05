@@ -14,7 +14,7 @@
  *          new Date('2011-10-10T15:48:00'),
  *          "Совещание",							
  *          "Хаят",
- *			"Повышение в должности"
+ *          "Повышение в должности",
  *          "34.342, 60.354" )
  *
  * @return {Object}
@@ -23,7 +23,7 @@
 function Event(start, end, name, place, definition, GPS) {
     "use strict";
     if (typeof GPS === "number") {
-	    if (GPS[0] > Math.abs(90) || GPS[1] > Math.abs(180)) {
+        if (GPS[0] > Math.abs(90) || GPS[1] > Math.abs(180)) {
             var new_GPS = [0, 0];
         } else {
             var new_GPS = GPS;
@@ -34,7 +34,7 @@ function Event(start, end, name, place, definition, GPS) {
         "end": +end,
         "name": name || "Имя",
         "place": place ||  "Место",
-	    "definition": definition || "Описание",
+        "definition": definition || "Описание",
         "GPS": GPS || "Долгота, Широта"
     };
 }
